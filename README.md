@@ -1,3 +1,24 @@
+# FH6 Booster
+
+**FH6 Booster** is a compact Windows utility for modifying supported unlock values in **Forza Horizon 4, Forza Horizon 5, and Forza Horizon 6**.
+
+It provides a focused value override interface for credits, XP, wheelspins, skill points, and other supported unlock values, wrapped in a clean purple-black desktop UI.
+
+## Features
+
+- Supports FH4, FH5, and FH6 process detection
+- Compact purple/black desktop interface
+- Credits, XP, wheelspins, skill points, and supported FH5/FH6 unlock values
+- Simple toggle-based value override workflow
+- Single-file Windows build
+- Built with C# / WPF / .NET
+
+## Download
+
+Download the latest release here:
+
+[Download FH6 Booster](https://vynx.dev/FH6Booster)
+
 ## Usage Instructions
 
 1. Launch the game.
