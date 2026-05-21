@@ -1,21 +1,25 @@
-================================================================================================
-Made by Vynx.dev
-Adapted From https://github.com/ForzaMods/Forza-Mods-AIO
-================================================================================================
+## Usage Instructions
 
-- Launch the game.
-- Launch FH6 Booster.exe
-- Get into freeroam. 
-- Select whatever you wish to modify, enter the value you want, click the toggle button.
-- Do something to change the value in-game. 
-	For example, if you want to change your money:
-		If you want money, buy a cheap car or get money from a wheelspin. 
-		If you want to change your skill points, use a skill point.
-		If you want wheelspins, use a wheelspin or earn one. If not available, just give it a couple minutes and it will update.
+1. Launch the game.
+2. Launch `FH6 Booster.exe`.
+3. Load into freeroam.
+4. Select the value you want to modify.
+5. Enter the desired amount.
+6. Enable the toggle.
+7. Trigger that value to update in-game.
+8. Once the value changes, disable the toggle to unfreeze it.
 
-- Once you see the value has changed, click the toggle button to unfreeze the value.
+### In-Game Update Examples
 
-================================================================================================
-Made by Vynx.dev
-Adapted From https://github.com/ForzaMods/Forza-Mods-AIO
-================================================================================================
+| Value | What to do after enabling the toggle |
+|---|---|
+| Credits | Buy a cheap car, earn credits, or receive money from a wheelspin. |
+| Skill Points | Spend or earn a skill point. |
+| Wheelspins | Use a wheelspin, earn one, or wait a few minutes for the value to refresh. |
+
+> **Important:** Disable the toggle after the value updates in-game. Leaving it enabled may keep the value frozen.
+
+---
+
+Made by [Vynx.dev](https://vynx.dev)  
+Adapted from [Forza Mods AIO](https://github.com/ForzaMods/Forza-Mods-AIO)
