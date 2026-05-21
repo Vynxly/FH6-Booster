@@ -1,0 +1,393 @@
+﻿<Page x:Class="Forza_Mods_AIO.Views.SubPages.SelfVehicle.Handling"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:local="clr-namespace:Forza_Mods_AIO.Views.SubPages.SelfVehicle"
+      xmlns:controls="clr-namespace:Forza_Mods_AIO.Controls.StatusComboboxItem"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance local:Handling, IsDesignTimeCreatable= true}"
+      Title="Handling" 
+      d:DesignHeight="Auto" 
+      d:DesignWidth="800">
+    <StackPanel>
+        <Border Style="{StaticResource CommonBorderStyle}">
+            <Grid Margin="5 0">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <mah:NumericUpDown x:Name="VelocityStrength" 
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Left"
+                                   Value="3"
+                                   Minimum="1"
+                                   Maximum="10"
+                                   ValueChanged="VelocityStrength_OnValueChanged"
+                                   mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                                   IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                   Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"/>
+                
+                <Label Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Margin="5"
+                       Content="{DynamicResource Strength}"/>
+
+                <mah:NumericUpDown x:Name="VelocityLimit" 
+                                   Grid.Column="2"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Left"
+                                   Value="300"
+                                   Minimum="0"
+                                   ValueChanged="VelocityLimit_OnValueChanged"
+                                   mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                                   IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                   Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"/>
+                
+                <Label Grid.Column="3"
+                       VerticalAlignment="Center"
+                       Margin="5"
+                       Content="{DynamicResource Limit}"/>
+                
+                <mah:ToggleSwitch Grid.Column="4"
+                                  VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource Velocity}"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                  Toggled="VelocitySwitch_OnToggled">
+                    <mah:ToggleSwitch.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Set Hotkey"
+                                      Click="VelocityMenuItem_OnClick"/>
+                        </ContextMenu>
+                    </mah:ToggleSwitch.ContextMenu>  
+                </mah:ToggleSwitch>
+                
+            </Grid>
+        </Border>
+        
+        <Border Style="{StaticResource CommonBorderStyle}">
+            <Grid Margin="5 0">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox x:Name="WheelspeedModeBox" 
+                          Grid.Column="0"
+                          SelectedIndex="0"
+                          VerticalAlignment="Center"
+                          SelectionChanged="WheelspeedModeBox_OnSelectionChanged"
+                          mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                          Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                          BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"
+                          IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}">
+
+                    <ComboBoxItem Content="{DynamicResource Static}"/>
+                    <ComboBoxItem Content="{DynamicResource Linear}"/>
+                    
+                </ComboBox>
+                
+                <Label Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Content="{DynamicResource Mode}"
+                       Margin="5 0"/>
+                
+                <mah:NumericUpDown x:Name="WheelspeedValueBox"
+                                   Grid.Column="2"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Left"
+                                   Value="10"
+                                   Minimum="1"
+                                   Maximum="100"
+                                   ValueChanged="WheelspeedNum_OnValueChanged"
+                                   mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                                   Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"/>
+                
+                <Label Grid.Column="3"
+                       VerticalAlignment="Center"
+                       Content="{DynamicResource Strength}"
+                       Margin="5 0"/>
+                
+                <mah:NumericUpDown x:Name="WheelspeedLimit" 
+                                   Grid.Column="4"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Left"
+                                   Value="300"
+                                   Minimum="0"
+                                   ValueChanged="WheelspeedLimit_OnValueChanged"
+                                   mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                                   IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                   Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"/>
+                
+                <Label Grid.Column="5"
+                       VerticalAlignment="Center"
+                       Margin="5"
+                       Content="{DynamicResource Limit}"/>
+                
+                <mah:ToggleSwitch Grid.Column="6"
+                                  VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource Wheelspeed}"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                  Toggled="WheelspeedSwitch_OnToggled">
+                    <mah:ToggleSwitch.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Set Hotkey"
+                                      Click="WheelspeedMenuItem_OnClick"/>
+                        </ContextMenu>
+                    </mah:ToggleSwitch.ContextMenu>  
+                </mah:ToggleSwitch>
+
+            </Grid>
+        </Border>
+        
+        <Border Style="{StaticResource CommonBorderStyle}">
+            <Grid Margin="5 0">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox x:Name="ModifierModeBox" 
+                          Grid.Column="0"
+                          SelectedIndex="0"
+                          VerticalAlignment="Center"
+                          IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                          mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                          SelectionChanged="ModifierModeBox_OnSelectionChanged"
+                          Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                          BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}">
+                    
+                    <controls:StatusComboboxItem Content="{DynamicResource Acceleration}"
+                                                 IsOn="{Binding ViewModel.IsAccelEnabled}"/>
+                    
+                    <controls:StatusComboboxItem Content="{DynamicResource Gravity}"
+                                                 IsOn="{Binding ViewModel.IsGravityEnabled}"/>
+                    
+                </ComboBox>
+                
+                <mah:NumericUpDown x:Name="ModifierValueBox" 
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   Margin="5 0 0 0"
+                                   IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                   TextAlignment="Left"
+                                   Value="0"
+                                   ValueChanged="ModifierValueBox_OnValueChanged"
+                                   mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                                   Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"/>
+                
+                <Button Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Margin="5 0"
+                        IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                        mah:ControlsHelper.FocusBorderThickness="0"
+                        Content="{DynamicResource Pull}"
+                        Click="PullButton_OnClick"
+                        Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"/>
+                
+                <mah:ToggleSwitch x:Name="ModifierToggleSwitch" 
+                                  Grid.Column="3"
+                                  VerticalAlignment="Center"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Toggled="ModifierToggleSwitch_OnToggled"/>
+            </Grid>
+        </Border>
+        
+        <Border Style="{StaticResource CommonBorderStyle}">
+            <Grid Margin="5 0">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Slider x:Name="JumpSlider" 
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Minimum="1"
+                        Maximum="15"
+                        mah:SliderHelper.EnableMouseWheel="MouseHover"
+                        AutoToolTipPlacement="{StaticResource SliderAutoToolTipPlacement}"
+                        AutoToolTipPrecision="{StaticResource SliderTooltipPrecision}"
+                        ValueChanged="JumpSlider_OnValueChanged"
+                        IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"/>
+                
+                <mah:ToggleSwitch Grid.Column="1"
+                                  VerticalAlignment="Center"
+                                  Margin="5 0 0 0"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource JumpHack}"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                  Toggled="JumpSwitch_OnToggled">
+                  <mah:ToggleSwitch.ContextMenu>
+                      <ContextMenu>
+                          <MenuItem Header="Set Hotkey"
+                                    Click="JumpHackMenuItem_OnClick"/>
+                      </ContextMenu>
+                  </mah:ToggleSwitch.ContextMenu>  
+                </mah:ToggleSwitch>
+                
+            </Grid>
+        </Border>
+        
+        <Border Style="{StaticResource CommonBorderStyle}">
+            <Grid Margin="5 0">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <mah:NumericUpDown Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Left"
+                                   mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                                   Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"/>
+                
+                <Label Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Margin="5 0"
+                       Content="{DynamicResource FlyHackMovSpeed}"/>
+                
+                <mah:NumericUpDown Grid.Column="2"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Left"
+                                   mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                                   Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"
+                                   IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"/>
+                
+                <Label Grid.Column="3"
+                       VerticalAlignment="Center"
+                       Margin="5 0"
+                       Content="{DynamicResource FlyHackRotSpeed}"/>
+                
+                <mah:ToggleSwitch Grid.Column="4"
+                                  VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource FlyHack}"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"/>
+                
+            </Grid>
+        </Border>
+        
+        <Border Style="{StaticResource CommonBorderStyle}">
+            <Grid Margin="5 0">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <Slider x:Name="StopSlider" 
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        mah:SliderHelper.EnableMouseWheel="MouseHover"
+                        AutoToolTipPlacement="{StaticResource SliderAutoToolTipPlacement}"
+                        AutoToolTipPrecision="{StaticResource SliderTooltipPrecision}"
+                        Minimum="0.9"
+                        Maximum="1"
+                        Value="0.95"
+                        ValueChanged="StopSlider_OnValueChanged"
+                        IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"/>
+                
+                <mah:ToggleSwitch Grid.Column="1"
+                                  VerticalAlignment="Center"
+                                  Margin="5 0 0 0"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource SuperBrake}"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                  Toggled="StopSwitch_OnToggled">
+                    <mah:ToggleSwitch.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Set Hotkey"
+                                      Click="BrakeHackMenuItem_OnClick"/>
+                        </ContextMenu>
+                    </mah:ToggleSwitch.ContextMenu>  
+                </mah:ToggleSwitch>
+                
+            </Grid>
+        </Border>
+        
+        <Border Style="{StaticResource CommonBorderStyle}">
+            <StackPanel Margin="5 0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                
+                <mah:ToggleSwitch VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource SuperCar}"
+                                  IsEnabled="{Binding ViewModel.IsFh4}"/>
+                
+                <mah:ToggleSwitch VerticalAlignment="Center"
+                                  Margin="10 0 5 0"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource NoWaterDrag}"
+                                  IsEnabled="{Binding ViewModel.IsHorizon}"
+                                  Toggled="NoWaterDragSwitch_OnToggled"/>
+                
+                <mah:ToggleSwitch VerticalAlignment="Center"
+                                  Margin="5 0 10 0"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource NoClip}"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled}"
+                                  Toggled="NoClipSwitch_OnToggled"/>
+                
+                <mah:ToggleSwitch VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Content="{DynamicResource StopAllWheels}"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled, Mode=OneWay}"
+                                  Toggled="StopAllSwitch_OnToggled">
+                    <mah:ToggleSwitch.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Set Hotkey"
+                                      Click="StopAllWheelsMenuItem_OnClick"/>
+                        </ContextMenu>
+                    </mah:ToggleSwitch.ContextMenu>  
+                </mah:ToggleSwitch>
+                
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Page>

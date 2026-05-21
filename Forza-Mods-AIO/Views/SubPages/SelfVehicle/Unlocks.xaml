@@ -1,0 +1,120 @@
+<Page x:Class="Forza_Mods_AIO.Views.SubPages.SelfVehicle.Unlocks"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:local="clr-namespace:Forza_Mods_AIO.Views.SubPages.SelfVehicle"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance local:Unlocks, IsDesignTimeCreatable=true}"
+      Title="Unlocks"
+      Background="Transparent"
+      d:DesignHeight="260"
+      d:DesignWidth="500">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="BoosterPurple" Color="#B14CFF"/>
+        <SolidColorBrush x:Key="BoosterPanel" Color="#0F0A18"/>
+        <SolidColorBrush x:Key="BoosterField" Color="#171025"/>
+        <SolidColorBrush x:Key="BoosterBorder" Color="#4E2478"/>
+        <SolidColorBrush x:Key="BoosterMuted" Color="#9587A8"/>
+
+        <Style x:Key="FieldLabel" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{StaticResource BoosterMuted}"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="0 0 0 6"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="14"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="14"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="MODULE" Style="{StaticResource FieldLabel}"/>
+            <ComboBox x:Name="UnlockBox"
+                      SelectedIndex="0"
+                      SelectionChanged="UnlockBox_OnSelectionChanged"
+                      IsEnabled="{Binding ViewModel.AreUiElementsEnabled}"
+                      Height="40"
+                      FontFamily="Consolas"
+                      Foreground="#F2E7FF"
+                      Background="{StaticResource BoosterField}"
+                      BorderBrush="{StaticResource BoosterBorder}"
+                      mah:ControlsHelper.CornerRadius="10">
+                <ComboBoxItem Content="Credits"/>
+                <ComboBoxItem Content="XP"/>
+                <ComboBoxItem Content="Wheelspins"/>
+                <ComboBoxItem Content="Skill Points"/>
+                <ComboBoxItem Content="Accolades"/>
+                <ComboBoxItem Content="Kudos"/>
+                <ComboBoxItem Content="Forzathon Points"/>
+                <ComboBoxItem Content="Series Points"/>
+                <ComboBoxItem Content="Seasonal Points"/>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="AMOUNT" Style="{StaticResource FieldLabel}"/>
+            <mah:NumericUpDown x:Name="ValueBox"
+                               IsEnabled="{Binding ViewModel.AreUiElementsEnabled}"
+                               Height="40"
+                               TextAlignment="Left"
+                               Value="0"
+                               ParsingNumberStyle="Integer"
+                               Minimum="0"
+                               Maximum="2147483647"
+                               ValueChanged="ValueBox_OnValueChanged"
+                               HideUpDownButtons="True"
+                               FontFamily="Consolas"
+                               Foreground="#F2E7FF"
+                               Background="{StaticResource BoosterField}"
+                               BorderBrush="{StaticResource BoosterBorder}"
+                               mah:ControlsHelper.CornerRadius="10"/>
+        </StackPanel>
+
+        <Border Grid.Row="4"
+                CornerRadius="12"
+                Background="#130A20"
+                BorderBrush="#6A2CA8"
+                BorderThickness="1"
+                Padding="13 10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="VALUE OVERRIDE"
+                               Foreground="#EEDFFF"
+                               FontFamily="Consolas"
+                               FontWeight="Bold"
+                               FontSize="13"/>
+                    <TextBlock Text="Enable after setting amount.&#x0a;Do something to update the value you want to change in game.&#x0a;Disable after it changes in game."
+                               Foreground="{StaticResource BoosterMuted}"
+                               FontFamily="Consolas"
+                               FontSize="11"
+                               TextWrapping="Wrap"
+                               Margin="0 5 18 0"/>
+                </StackPanel>
+
+                <mah:ToggleSwitch x:Name="UnlockSwitch"
+                                  Grid.Column="1"
+                                  IsEnabled="{Binding ViewModel.AreUiElementsEnabled}"
+                                  VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Toggled="UnlockSwitch_OnToggled"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
+
+

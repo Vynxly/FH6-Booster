@@ -1,0 +1,195 @@
+﻿<Page x:Class="Forza_Mods_AIO.Views.Pages.AioInfo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Forza_Mods_AIO.Views.Pages"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:debug="debug-mode"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance local:AioInfo,IsDesignTimeCreatable=True}"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="AioInfo"
+      Background="Transparent">
+
+    <Page.Resources>
+        <Style x:Key="NavigateButtonStyle"
+               TargetType="Button">
+
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="ToolTip" Value="{Binding Path=CommandParameter, RelativeSource={RelativeSource Self}}" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Path
+                                Data="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                Stroke="{x:Null}"
+                                Fill="White"
+                                Stretch="Uniform"
+                                Width="25"
+                                Height="25"
+                                SnapsToDevicePixels="False"
+                                UseLayoutRounding="False"
+                                StrokeThickness="0"
+                                StrokeStartLineCap="flat"
+                                StrokeEndLineCap="flat"
+                                StrokeLineJoin="miter"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+
+                            <Rectangle VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Height="25"
+                                       Width="25">
+                                <Rectangle.Fill>
+                                    <SolidColorBrush Color="Black" Opacity="0" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="1" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Margin="10">
+
+            <Label VerticalAlignment="Top"
+                   HorizontalAlignment="Right"
+                   FontWeight="SemiBold"
+                   FontSize="14"
+                   Content="{DynamicResource Donations}" />
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0 5 0 0">
+
+                <Label Content="Merik: " />
+
+                <Button Style="{DynamicResource NavigateButtonStyle}"
+                        Tag="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"
+                        Command="{Binding ViewModel.LaunchUrlCommand, Mode=OneWay}"
+                        CommandParameter="https://ko-fi.com/merikaaaaa" />
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0 5 0 0">
+
+                <Label Content="Yeethan: " />
+                
+                <Button Style="{DynamicResource NavigateButtonStyle}"
+                        Tag="M20.43705,7.10449a3.82273,3.82273,0,0,0-.57281-.5238,4.72529,4.72529,0,0,0-1.15766-3.73987C17.6226,1.61914,15.77494,1,13.2144,1H7.00053A1.89234,1.89234,0,0,0,5.13725,2.5918L2.5474,18.99805A1.53317,1.53317,0,0,0,4.063,20.7832H6.72709l-.082.52051A1.46684,1.46684,0,0,0,8.0933,23h3.23438a1.76121,1.76121,0,0,0,1.751-1.46973l.64063-4.03125.01074-.05468h.29883c4.03223,0,6.55078-1.99317,7.28516-5.7627A5.149,5.149,0,0,0,20.43705,7.10449ZM7.84233,13.7041l-.71448,4.53528-.08631.54382H4.606L7.09721,3H13.2144c1.93554,0,3.31738.4043,3.99218,1.16406a2.96675,2.96675,0,0,1,.60791,2.73334l-.01861.11224c-.01215.07648-.0232.15119-.0434.24622a5.84606,5.84606,0,0,1-2.00512,3.67053,6.67728,6.67728,0,0,1-4.21753,1.183H9.70658A1.87969,1.87969,0,0,0,7.84233,13.7041Zm11.50878-2.40527c-.55078,2.82812-2.24218,4.14551-5.32226,4.14551h-.4834a1.76109,1.76109,0,0,0-1.751,1.47265l-.64941,4.07422L8.71733,21l.47815-3.03387.61114-3.85285h1.7193c.1568,0,.29541-.02356.44812-.02893.35883-.01239.71661-.02618,1.05267-.06787.20526-.02557.39362-.07221.59034-.1087.27252-.05036.54522-.10016.80108-.17127.19037-.053.368-.12121.54907-.18561.23926-.0849.4748-.174.69757-.27868.168-.0791.32807-.16706.48658-.25727a6.77125,6.77125,0,0,0,.61236-.39172c.14228-.1026.28192-.20789.415-.321a6.56392,6.56392,0,0,0,.53693-.51892c.113-.12055.2287-.23755.33331-.36725a7.09,7.09,0,0,0,.48-.69263c.07648-.12219.16126-.23523.23163-.36383a8.33175,8.33175,0,0,0,.52075-1.15326c.00867-.02386.02106-.044.02954-.068.004-.01123.00989-.02057.01386-.03186A4.29855,4.29855,0,0,1,19.35111,11.29883Z"
+                        Command="{Binding ViewModel.LaunchUrlCommand, Mode=OneWay}"
+                        CommandParameter="https://www.paypal.com/donate?hosted_button_id=DACQKRJ4HTZRN" />
+
+            </StackPanel>
+
+            <Label VerticalAlignment="Top"
+                   HorizontalAlignment="Right"
+                   FontWeight="DemiBold"
+                   FontSize="14"
+                   Content="{DynamicResource UsefulLinks}" />
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0 5 0 0">
+
+                <Label Content="{DynamicResource GitRepository}" />
+
+                <Button Style="{DynamicResource NavigateButtonStyle}"
+                        Tag="M12,2.2467A10.00042,10.00042,0,0,0,8.83752,21.73419c.5.08752.6875-.21247.6875-.475,0-.23749-.01251-1.025-.01251-1.86249C7,19.85919,6.35,18.78423,6.15,18.22173A3.636,3.636,0,0,0,5.125,16.8092c-.35-.1875-.85-.65-.01251-.66248A2.00117,2.00117,0,0,1,6.65,17.17169a2.13742,2.13742,0,0,0,2.91248.825A2.10376,2.10376,0,0,1,10.2,16.65923c-2.225-.25-4.55-1.11254-4.55-4.9375a3.89187,3.89187,0,0,1,1.025-2.6875,3.59373,3.59373,0,0,1,.1-2.65s.83747-.26251,2.75,1.025a9.42747,9.42747,0,0,1,5,0c1.91248-1.3,2.75-1.025,2.75-1.025a3.59323,3.59323,0,0,1,.1,2.65,3.869,3.869,0,0,1,1.025,2.6875c0,3.83747-2.33752,4.6875-4.5625,4.9375a2.36814,2.36814,0,0,1,.675,1.85c0,1.33752-.01251,2.41248-.01251,2.75,0,.26251.1875.575.6875.475A10.0053,10.0053,0,0,0,12,2.2467Z"
+                        Command="{Binding ViewModel.LaunchUrlCommand, Mode=OneWay}"
+                        CommandParameter="https://vynx.dev"
+                        ToolTip="https://vynx.dev" />
+
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="10">
+
+            <TextBlock Text="{DynamicResource FreeAndOpenSource}"
+                       Foreground="White"
+                       TextWrapping="Wrap"/>
+            
+            <TextBlock Text="{DynamicResource OnlyOfficialDownload}"
+                       Foreground="White"
+                       TextWrapping="Wrap"/>
+            
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{DynamicResource JoinTheDiscord}"
+                           Foreground="White"
+                           TextWrapping="Wrap"/>
+                
+                <TextBlock Margin="5 0">
+                    <Hyperlink Command="{Binding ViewModel.LaunchUrlCommand}"
+                               CommandParameter="{DynamicResource DiscordHyperlink}"
+                               Foreground="DodgerBlue">
+                        <Hyperlink.Inlines>
+                            <Run Text="{DynamicResource DiscordHyperlink}"/>
+                        </Hyperlink.Inlines>    
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+            
+            <TextBlock Text="{DynamicResource MainDeveloper}"
+                       Foreground="White"
+                       TextWrapping="Wrap"/>
+            
+            <TextBlock Text="{DynamicResource AnyoneElseWhoClaims}"
+                       Foreground="White"
+                       TextWrapping="Wrap"/>
+
+        </StackPanel>
+        
+        <StackPanel Grid.Column="1" 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="10">
+
+            <mah:ToggleSwitch Height="55"
+                              Header="{DynamicResource Overlay}"
+                              mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Right"
+                              MinWidth="0"
+                              IsEnabled="False"
+                              Focusable="False"
+                              HorizontalAlignment="Right" />
+
+            <mc:AlternateContent>
+                <mc:Choice Requires="debug">
+                    <Button Content="{DynamicResource DebugWindow}"
+                            Margin="0 10 0 0"
+                            Focusable="False"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            BorderThickness="0"
+                            HorizontalAlignment="Right"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Command="{Binding ViewModel.ShowDebugWindowCommand, Mode=OneWay}" />
+                </mc:Choice>
+            </mc:AlternateContent>
+        </StackPanel>
+    </Grid>
+</Page>

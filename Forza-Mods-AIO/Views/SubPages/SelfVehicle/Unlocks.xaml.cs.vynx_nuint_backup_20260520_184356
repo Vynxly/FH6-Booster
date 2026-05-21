@@ -1,0 +1,492 @@
+using System.Windows;
+using System.Windows.Controls;
+using Forza_Mods_AIO.Cheats.ForzaHorizon5;
+using Forza_Mods_AIO.Models;
+using Forza_Mods_AIO.ViewModels.SubPages.SelfVehicle;
+using static Forza_Mods_AIO.Resources.Cheats;
+using static Forza_Mods_AIO.Resources.Memory;
+
+namespace Forza_Mods_AIO.Views.SubPages.SelfVehicle;
+
+public partial class Unlocks
+{
+    private const int PulseDelayMs = 350;
+
+    public Unlocks()
+    {
+        ViewModel = new UnlocksViewModel();
+        DataContext = this;
+
+        InitializeComponent();
+        ValueBox.Value = ViewModel.CreditsValue;
+    }
+
+    public UnlocksViewModel ViewModel { get; }
+
+    private static UnlocksCheats UnlocksCheatsFh5 => GetClass<UnlocksCheats>();
+
+    private static Cheats.ForzaHorizon4.UnlocksCheats UnlocksCheatsFh4 =>
+        GetClass<Cheats.ForzaHorizon4.UnlocksCheats>();
+
+    private bool IsFh4 => GameVerPlat.GetInstance().Type == GameVerPlat.GameType.Fh4;
+
+    private bool HasSupportedGame()
+    {
+        if (GameVerPlat.GetInstance().Type != GameVerPlat.GameType.None)
+        {
+            return true;
+        }
+
+        MessageBox.Show(
+            "Launch FH4, FH5, or FH6 first.",
+            "No game attached",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+
+        return false;
+    }
+
+    private bool IsFh5OnlySelection()
+    {
+        return UnlockBox.SelectedIndex is >= 4 and <= 8;
+    }
+
+    private bool CanUseCurrentSelection()
+    {
+        if (!HasSupportedGame())
+        {
+            return false;
+        }
+
+        if (IsFh4 && IsFh5OnlySelection())
+        {
+            MessageBox.Show(
+                "This module is only available for FH5/FH6.",
+                "Unsupported module",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private static async Task PulseIntValue(nint enableAddress, nint valueAddress, int value)
+    {
+        GetInstance().WriteMemory(enableAddress, (byte)1);
+        GetInstance().WriteMemory(valueAddress, value);
+        await Task.Delay(PulseDelayMs);
+        GetInstance().WriteMemory(enableAddress, (byte)0);
+    }
+
+    private async void SetValueButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (!CanUseCurrentSelection())
+        {
+            return;
+        }
+
+        StoreCurrentInputValue();
+
+        ViewModel.AreUiElementsEnabled = false;
+
+        try
+        {
+            switch (UnlockBox.SelectedIndex)
+            {
+                case 0:
+                {
+                    if (IsFh4)
+                    {
+                        await CreditsFh4();
+                    }
+                    else
+                    {
+                        await Credits();
+                    }
+
+                    break;
+                }
+                case 1:
+                {
+                    if (IsFh4)
+                    {
+                        await XpFh4();
+                    }
+                    else
+                    {
+                        await Xp();
+                    }
+
+                    break;
+                }
+                case 2:
+                {
+                    if (IsFh4)
+                    {
+                        await WheelspinsFh4();
+                    }
+                    else
+                    {
+                        await Wheelspins();
+                    }
+
+                    break;
+                }
+                case 3:
+                {
+                    if (IsFh4)
+                    {
+                        await SkillPointsFh4();
+                    }
+                    else
+                    {
+                        await SkillPoints();
+                    }
+
+                    break;
+                }
+                case 4:
+                {
+                    await Accolades();
+                    break;
+                }
+                case 5:
+                {
+                    await Kudos();
+                    break;
+                }
+                case 6:
+                {
+                    await Forzathon();
+                    break;
+                }
+                case 7:
+                {
+                    await Series();
+                    break;
+                }
+                case 8:
+                {
+                    await Seasonal();
+                    break;
+                }
+            }
+        }
+        finally
+        {
+            ViewModel.AreUiElementsEnabled = true;
+        }
+    }
+
+    private async Task Credits()
+    {
+        if (UnlocksCheatsFh5.CreditsDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatCredits();
+        }
+
+        if (UnlocksCheatsFh5.CreditsDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh5.CreditsDetourAddress + 0x31,
+            UnlocksCheatsFh5.CreditsDetourAddress + 0x32,
+            ViewModel.CreditsValue);
+
+        ViewModel.IsCreditsEnabled = false;
+    }
+
+    private async Task CreditsFh4()
+    {
+        if (UnlocksCheatsFh4.CreditsDetourAddress == 0)
+        {
+            await UnlocksCheatsFh4.CheatCredits();
+        }
+
+        if (UnlocksCheatsFh4.CreditsDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh4.CreditsDetourAddress + 0x24,
+            UnlocksCheatsFh4.CreditsDetourAddress + 0x25,
+            ViewModel.CreditsValue);
+
+        ViewModel.IsCreditsEnabled = false;
+    }
+
+    private async Task Xp()
+    {
+        if (UnlocksCheatsFh5.XpDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatXp();
+        }
+
+        if (UnlocksCheatsFh5.XpDetourAddress <= 0) return;
+
+        GetInstance().WriteMemory(UnlocksCheatsFh5.XpPointsDetourAddress + 0x1B, (byte)1);
+        GetInstance().WriteMemory(UnlocksCheatsFh5.XpDetourAddress + 0x1B, (byte)1);
+        GetInstance().WriteMemory(UnlocksCheatsFh5.XpDetourAddress + 0x1C, ViewModel.XpValue);
+        await Task.Delay(PulseDelayMs);
+        GetInstance().WriteMemory(UnlocksCheatsFh5.XpPointsDetourAddress + 0x1B, (byte)0);
+        GetInstance().WriteMemory(UnlocksCheatsFh5.XpDetourAddress + 0x1B, (byte)0);
+
+        ViewModel.IsXpEnabled = false;
+    }
+
+    private async Task XpFh4()
+    {
+        if (UnlocksCheatsFh4.XpDetourAddress == 0)
+        {
+            await UnlocksCheatsFh4.CheatXp();
+        }
+
+        if (UnlocksCheatsFh4.XpDetourAddress <= 0) return;
+
+        GetInstance().WriteMemory(UnlocksCheatsFh4.XpPointsDetourAddress + 0x1B, (byte)1);
+        GetInstance().WriteMemory(UnlocksCheatsFh4.XpDetourAddress + 0x1B, (byte)1);
+        GetInstance().WriteMemory(UnlocksCheatsFh4.XpDetourAddress + 0x1C, ViewModel.XpValue);
+        await Task.Delay(PulseDelayMs);
+        GetInstance().WriteMemory(UnlocksCheatsFh4.XpPointsDetourAddress + 0x1B, (byte)0);
+        GetInstance().WriteMemory(UnlocksCheatsFh4.XpDetourAddress + 0x1B, (byte)0);
+
+        ViewModel.IsXpEnabled = false;
+    }
+
+    private async Task Wheelspins()
+    {
+        if (UnlocksCheatsFh5.SpinsDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatSpins();
+        }
+
+        if (UnlocksCheatsFh5.SpinsDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh5.SpinsDetourAddress + 0x1C,
+            UnlocksCheatsFh5.SpinsDetourAddress + 0x1D,
+            ViewModel.WheelspinsValue);
+
+        ViewModel.IsWheelspinsEnabled = false;
+    }
+
+    private async Task WheelspinsFh4()
+    {
+        if (UnlocksCheatsFh4.SpinsDetourAddress == 0)
+        {
+            await UnlocksCheatsFh4.CheatSpins();
+        }
+
+        if (UnlocksCheatsFh4.SpinsDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh4.SpinsDetourAddress + 0x1A,
+            UnlocksCheatsFh4.SpinsDetourAddress + 0x1B,
+            ViewModel.WheelspinsValue);
+
+        ViewModel.IsWheelspinsEnabled = false;
+    }
+
+    private async Task SkillPoints()
+    {
+        if (UnlocksCheatsFh5.SkillPointsDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatSkillPoints();
+        }
+
+        if (UnlocksCheatsFh5.SkillPointsDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh5.SkillPointsDetourAddress + 0x19,
+            UnlocksCheatsFh5.SkillPointsDetourAddress + 0x1A,
+            ViewModel.SkillPointsValue);
+
+        ViewModel.IsSkillPointsEnabled = false;
+    }
+
+    private async Task SkillPointsFh4()
+    {
+        if (UnlocksCheatsFh4.SkillPointsDetourAddress == 0)
+        {
+            await UnlocksCheatsFh4.CheatSkillPoints();
+        }
+
+        if (UnlocksCheatsFh4.SkillPointsDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh4.SkillPointsDetourAddress + 0x1C,
+            UnlocksCheatsFh4.SkillPointsDetourAddress + 0x1D,
+            ViewModel.SkillPointsValue);
+
+        ViewModel.IsSkillPointsEnabled = false;
+    }
+
+    private async Task Kudos()
+    {
+        if (UnlocksCheatsFh5.BxmlEncryptionDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatBxmlEncryption();
+        }
+
+        if (UnlocksCheatsFh5.BxmlEncryptionDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh5.BxmlEncryptionDetourAddress + 0x54,
+            UnlocksCheatsFh5.BxmlEncryptionDetourAddress + 0x55,
+            ViewModel.KudosValue);
+
+        ViewModel.IsKudosEnabled = false;
+    }
+
+    private async Task Accolades()
+    {
+        if (UnlocksCheatsFh5.BxmlEncryptionDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatBxmlEncryption();
+        }
+
+        if (UnlocksCheatsFh5.BxmlEncryptionDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh5.BxmlEncryptionDetourAddress + 0x59,
+            UnlocksCheatsFh5.BxmlEncryptionDetourAddress + 0x5A,
+            ViewModel.AccoladesValue);
+
+        ViewModel.IsAccoladesEnabled = false;
+    }
+
+    private async Task Forzathon()
+    {
+        if (UnlocksCheatsFh5.BxmlEncryptionDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatBxmlEncryption();
+        }
+
+        if (UnlocksCheatsFh5.BxmlEncryptionDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh5.BxmlEncryptionDetourAddress + 0x5E,
+            UnlocksCheatsFh5.BxmlEncryptionDetourAddress + 0x5F,
+            ViewModel.ForzathonValue);
+
+        ViewModel.IsForzathonEnabled = false;
+    }
+
+    private async Task Seasonal()
+    {
+        if (UnlocksCheatsFh5.SeasonalDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatSeasonal();
+        }
+
+        if (UnlocksCheatsFh5.SeasonalDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh5.SeasonalDetourAddress + 0x23,
+            UnlocksCheatsFh5.SeasonalDetourAddress + 0x24,
+            ViewModel.SeasonalValue);
+
+        ViewModel.IsSeasonalEnabled = false;
+    }
+
+    private async Task Series()
+    {
+        if (UnlocksCheatsFh5.SeriesDetourAddress == 0)
+        {
+            await UnlocksCheatsFh5.CheatSeries();
+        }
+
+        if (UnlocksCheatsFh5.SeriesDetourAddress <= 0) return;
+
+        await PulseIntValue(
+            UnlocksCheatsFh5.SeriesDetourAddress + 0x1B,
+            UnlocksCheatsFh5.SeriesDetourAddress + 0x1C,
+            ViewModel.SeriesValue);
+
+        ViewModel.IsSeriesEnabled = false;
+    }
+
+    private void UnlockBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (ValueBox == null || UnlockBox == null)
+        {
+            return;
+        }
+
+        ValueBox.ValueChanged -= ValueBox_OnValueChanged;
+
+        ValueBox.Value = UnlockBox.SelectedIndex switch
+        {
+            0 => ViewModel.CreditsValue,
+            1 => ViewModel.XpValue,
+            2 => ViewModel.WheelspinsValue,
+            3 => ViewModel.SkillPointsValue,
+            4 => ViewModel.AccoladesValue,
+            5 => ViewModel.KudosValue,
+            6 => ViewModel.ForzathonValue,
+            7 => ViewModel.SeriesValue,
+            8 => ViewModel.SeasonalValue,
+            _ => 0
+        };
+
+        ValueBox.ValueChanged += ValueBox_OnValueChanged;
+    }
+
+    private void ValueBox_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+    {
+        StoreCurrentInputValue();
+    }
+
+    private void StoreCurrentInputValue()
+    {
+        var value = Convert.ToInt32(ValueBox.Value ?? 0);
+
+        switch (UnlockBox.SelectedIndex)
+        {
+            case 0:
+            {
+                ViewModel.CreditsValue = value;
+                break;
+            }
+            case 1:
+            {
+                ViewModel.XpValue = value;
+                break;
+            }
+            case 2:
+            {
+                ViewModel.WheelspinsValue = value;
+                break;
+            }
+            case 3:
+            {
+                ViewModel.SkillPointsValue = value;
+                break;
+            }
+            case 4:
+            {
+                ViewModel.AccoladesValue = value;
+                break;
+            }
+            case 5:
+            {
+                ViewModel.KudosValue = value;
+                break;
+            }
+            case 6:
+            {
+                ViewModel.ForzathonValue = value;
+                break;
+            }
+            case 7:
+            {
+                ViewModel.SeriesValue = value;
+                break;
+            }
+            case 8:
+            {
+                ViewModel.SeasonalValue = value;
+                break;
+            }
+        }
+    }
+}

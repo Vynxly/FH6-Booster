@@ -1,0 +1,278 @@
+﻿<Page x:Class="Forza_Mods_AIO.Views.Pages.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Forza_Mods_AIO.Views.Pages"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:controls="clr-namespace:Forza_Mods_AIO.Controls.TranslationComboboxItem"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance local:Settings, IsDesignTimeCreatable=True}"
+      Title="Settings" 
+      d:DesignHeight="450" 
+      d:DesignWidth="800">
+    
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
+    
+    <StackPanel Margin="10">
+        <GroupBox Header="{DynamicResource Appearance}"
+                  BorderBrush="{Binding Theming.DarkerColour}"
+                  BorderThickness="{StaticResource ControlBorderThickness}"
+                  mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                  mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                  mah:HeaderedControlHelper.HeaderFontSize="{DynamicResource MahApps.Font.Size.Button}"
+                  mah:HeaderedControlHelper.HeaderBackground="{Binding Theming.DarkerColour}">
+            
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <mah:ColorPicker Grid.Column="0"
+                                 Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                                 BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"
+                                 VerticalAlignment="Center"
+                                 SelectedColor="{Binding ViewModel.ThemeColor, Mode=TwoWay}"
+                                 DefaultColor="{Binding Theming.MainColourAsColour, Mode=OneWay}"
+                                 IsAvailableColorPaletteVisible="True"
+                                 mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                                 mah:HeaderedControlHelper.HeaderFontWeight="Normal"/>
+
+                <Button Grid.Column="1" 
+                        Content="{DynamicResource ChangeTheme}"
+                        Margin="5 0 0 0"
+                        Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        mah:ControlsHelper.FocusBorderThickness="0" 
+                        Command="{Binding ViewModel.ChangeThemeCommand}"/>
+                
+                <Button Grid.Column="2" 
+                        Content="{DynamicResource MonetTheme}"
+                        Margin="5 0 0 0"
+                        Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        mah:ControlsHelper.FocusBorderThickness="0" 
+                        Command="{Binding ViewModel.MonetThemeCommand}"/>
+                
+                <Button Grid.Column="3" 
+                        Content="{DynamicResource ResetTheme}"
+                        Margin="5 0 0 0"
+                        Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        mah:ControlsHelper.FocusBorderThickness="0" 
+                        Command="{Binding ViewModel.ResetThemeCommand}"/>
+                
+            </Grid>
+        </GroupBox>
+        
+        <GroupBox Header="{DynamicResource Language}"
+                  BorderBrush="{Binding Theming.DarkerColour}"
+                  BorderThickness="{StaticResource ControlBorderThickness}"
+                  Margin="0 10 0 0"
+                  mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                  mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                  mah:HeaderedControlHelper.HeaderFontSize="{DynamicResource MahApps.Font.Size.Button}"
+                  mah:HeaderedControlHelper.HeaderBackground="{Binding Theming.DarkerColour}">
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <ComboBox BorderThickness="0"
+                          x:Name="LanguageBox"
+                          Grid.Column="0"
+                          Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                          SelectedIndex="0"
+                          Margin="5"
+                          mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                          SelectionChanged="LanguageBox_OnSelectionChanged">
+                    
+                    <controls:TranslationComboboxItem Content="{DynamicResource English}" 
+                                                      Translators="merika"
+                                                      LanguageCode="English"
+                                                      IsEnabled="True"/>
+                                                  
+                    <controls:TranslationComboboxItem Content="{DynamicResource Afrikaans}" 
+                                                      IsEnabled="False"
+                                                      LanguageCode="Afrikaans"
+                                                      Translators=""/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Arabic}" 
+                                                      Translators=""
+                                                      LanguageCode="Arabic"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Catalan}" 
+                                                      Translators=""
+                                                      LanguageCode="Catalan"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource ChineseSimplified}" 
+                                                      Translators="Google Translate"
+                                                      LanguageCode="ChineseSimplified"
+                                                      IsEnabled="True"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource ChineseTraditional}" 
+                                                      Translators=""
+                                                      LanguageCode="ChineseTraditional"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Czech}" 
+                                                      Translators=""
+                                                      LanguageCode="Czech"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Danish}" 
+                                                      Translators=""
+                                                      LanguageCode="Danish"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Dutch}" 
+                                                      Translators=""
+                                                      LanguageCode="Dutch"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Finnish}" 
+                                                      Translators=""
+                                                      LanguageCode="Finnish"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource French}" 
+                                                      Translators="Google Translate"
+                                                      LanguageCode="French"
+                                                      IsEnabled="True"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource German}" 
+                                                      Translators="lesstoupan, d4vss, OREOONTOP, reviloje.dfvc"
+                                                      LanguageCode="German"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Greek}" 
+                                                      Translators="GodsonGamerGr"
+                                                      LanguageCode="Greek"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Hebrew}" 
+                                                      Translators="tomer_pac"
+                                                      LanguageCode="Hebrew"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Hungarian}" 
+                                                      Translators="benobmw"
+                                                      LanguageCode="Hungarian"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Italian}" 
+                                                      Translators=""
+                                                      LanguageCode="Italian"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Japanese}" 
+                                                      Translators=""
+                                                      LanguageCode="Japanese"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Korean}" 
+                                                      Translators=""
+                                                      LanguageCode="Korean"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Norwegian}" 
+                                                      Translators=""
+                                                      LanguageCode="Norwegian"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Polish}" 
+                                                      Translators="merika, Skrajdovski, h1ro, k.wawrzyn91"
+                                                      LanguageCode="Polish"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Portuguese}" 
+                                                      Translators=""
+                                                      LanguageCode="Portuguese"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource PortugueseBrazilian}" 
+                                                      Translators=""
+                                                      LanguageCode="PortugueseBrazilian"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource PortugueseBrazilian}" 
+                                                      Translators="https.igor02, Henrique-Coder"
+                                                      LanguageCode="PortugueseBrazilian"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Romanian}" 
+                                                      Translators="CreepyPigeon, apol0"
+                                                      LanguageCode="Romanian"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Russian}" 
+                                                      Translators="OdnaStreet, aladushek2004, arsutov39"
+                                                      LanguageCode="Russian"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource SerbianCyrillic}" 
+                                                      Translators=""
+                                                      LanguageCode="SerbianCyrillic"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource SerbianLatin}" 
+                                                      Translators=""
+                                                      LanguageCode="SerbianLatin"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Spanish}" 
+                                                      Translators=""
+                                                      LanguageCode="Spanish"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Swedish}" 
+                                                      Translators=""
+                                                      LanguageCode="Swedish"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Thai}" 
+                                                      Translators=""
+                                                      LanguageCode="Thai"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Turkish}" 
+                                                      Translators=""
+                                                      LanguageCode="Turkish"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Ukrainian}" 
+                                                      Translators=""
+                                                      LanguageCode="Ukrainian"
+                                                      IsEnabled="False"/>
+                
+                    <controls:TranslationComboboxItem Content="{DynamicResource Vietnamese}" 
+                                                      Translators=""
+                                                      LanguageCode="Vietnamese"
+                                                      IsEnabled="False"/>
+                    
+                </ComboBox>
+
+                <Button Grid.Column="1"
+                        Content="{DynamicResource ResetLanguage}"
+                        Margin="5"
+                        Background="{DynamicResource MahApps.Brushes.AccentBase}"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        mah:ControlsHelper.FocusBorderThickness="0"
+                        Click="ResetLanguage_OnClick"/>
+            </Grid>
+        </GroupBox>
+    </StackPanel>
+</Page>
