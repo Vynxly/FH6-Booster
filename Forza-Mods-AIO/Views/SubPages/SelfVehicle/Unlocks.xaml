@@ -9,8 +9,8 @@
       d:DataContext="{d:DesignInstance local:Unlocks, IsDesignTimeCreatable=true}"
       Title="Unlocks"
       Background="Transparent"
-      d:DesignHeight="260"
-      d:DesignWidth="500">
+      d:DesignHeight="710"
+      d:DesignWidth="680">
 
     <Page.Resources>
         <SolidColorBrush x:Key="BoosterPurple" Color="#B14CFF"/>
@@ -34,6 +34,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="14"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="14"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="14"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="14"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
@@ -49,14 +55,9 @@
                       BorderBrush="{StaticResource BoosterBorder}"
                       mah:ControlsHelper.CornerRadius="10">
                 <ComboBoxItem Content="Credits"/>
-                <ComboBoxItem Content="XP"/>
                 <ComboBoxItem Content="Wheelspins"/>
                 <ComboBoxItem Content="Skill Points"/>
-                <ComboBoxItem Content="Accolades"/>
-                <ComboBoxItem Content="Kudos"/>
-                <ComboBoxItem Content="Forzathon Points"/>
                 <ComboBoxItem Content="Series Points"/>
-                <ComboBoxItem Content="Seasonal Points"/>
             </ComboBox>
         </StackPanel>
 
@@ -89,6 +90,112 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="QUICK ACTIONS"
+                               Foreground="#EEDFFF"
+                               FontFamily="Consolas"
+                               FontWeight="Bold"
+                               FontSize="13"/>
+                    <TextBlock Text="One-Click Booster: 20m Credits + Unlock All&#x0a;Max All: 20m Credits, Wheelspins, Skill Points + Unlock All"
+                               Foreground="{StaticResource BoosterMuted}"
+                               FontFamily="Consolas"
+                               FontSize="11"
+                               TextWrapping="Wrap"
+                               Margin="0 5 18 0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="One-Click Booster"
+                        IsEnabled="{Binding ViewModel.AreUiElementsEnabled}"
+                        VerticalAlignment="Center"
+                        Margin="0 0 8 0"
+                        Padding="12 6"
+                        BorderThickness="0"
+                        FontFamily="Consolas"
+                        Background="{StaticResource BoosterPurple}"
+                        Foreground="White"
+                        Click="OneClickBooster_OnClick"/>
+
+                <Button Grid.Column="2"
+                        Content="Max All"
+                        IsEnabled="{Binding ViewModel.AreUiElementsEnabled}"
+                        VerticalAlignment="Center"
+                        Padding="12 6"
+                        BorderThickness="0"
+                        FontFamily="Consolas"
+                        Background="{StaticResource BoosterField}"
+                        Foreground="White"
+                        Click="MaxAll_OnClick"/>
+            </Grid>
+        </Border>
+
+
+        <Border Grid.Row="6"
+                CornerRadius="12"
+                Background="#130A20"
+                BorderBrush="#6A2CA8"
+                BorderThickness="1"
+                Padding="13 10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="GAMEPLAY FEATURES"
+                               Foreground="#EEDFFF"
+                               FontFamily="Consolas"
+                               FontWeight="Bold"
+                               FontSize="13"/>
+                    <TextBlock Text="Visible access to Sell Payout, Drift Score, and No Skill Break without changing the working credits path."
+                               Foreground="{StaticResource BoosterMuted}"
+                               FontFamily="Consolas"
+                               FontSize="11"
+                               TextWrapping="Wrap"
+                               Margin="0 5 18 0"/>
+                </StackPanel>
+
+                <mah:ToggleSwitch Grid.Column="1"
+                                  Content="Sell Payout"
+                                  VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Margin="0 0 10 0"
+                                  Toggled="SellPayoutSwitch_OnToggled"/>
+
+                <mah:ToggleSwitch Grid.Column="2"
+                                  Content="Drift Score 10x"
+                                  VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Margin="0 0 10 0"
+                                  Toggled="DriftScoreSwitch_OnToggled"/>
+
+                <mah:ToggleSwitch Grid.Column="3"
+                                  Content="No Skill Break"
+                                  VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Toggled="NoSkillBreakSwitch_OnToggled"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="8"
+                CornerRadius="12"
+                Background="#130A20"
+                BorderBrush="#6A2CA8"
+                BorderThickness="1"
+                Padding="13 10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel VerticalAlignment="Center">
@@ -112,6 +219,56 @@
                                   MinWidth="0"
                                   FontSize="12"
                                   Toggled="UnlockSwitch_OnToggled"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="10"
+                CornerRadius="12"
+                Background="#130A20"
+                BorderBrush="#6A2CA8"
+                BorderThickness="1"
+                Padding="13 10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="SQL DATABASE"
+                               Foreground="#EEDFFF"
+                               FontFamily="Consolas"
+                               FontWeight="Bold"
+                               FontSize="13"/>
+                    <TextBlock Text="Unlock Everything runs all SQL cheats in safe batches. Persistent locks re-apply Free Cars, Full Autoshow, and Install Flags every 10 seconds."
+                               Foreground="{StaticResource BoosterMuted}"
+                               FontFamily="Consolas"
+                               FontSize="11"
+                               TextWrapping="Wrap"
+                               Margin="0 5 18 0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="Unlock Everything"
+                        IsEnabled="{Binding SqlViewModel.UiElementsEnabled}"
+                        VerticalAlignment="Center"
+                        Margin="0 0 8 0"
+                        Padding="12 6"
+                        BorderThickness="0"
+                        FontFamily="Consolas"
+                        Background="{StaticResource BoosterPurple}"
+                        Foreground="White"
+                        Command="{Binding SqlViewModel.UnlockEverythingCommand}"/>
+
+                <mah:ToggleSwitch Grid.Column="2"
+                                  Content="Persistent Locks"
+                                  IsEnabled="{Binding SqlViewModel.UiElementsEnabled}"
+                                  VerticalAlignment="Center"
+                                  MinWidth="0"
+                                  FontSize="12"
+                                  Command="{Binding SqlViewModel.TogglePersistentLocksCommand}"
+                                  CommandParameter="{Binding IsOn, RelativeSource={RelativeSource Self}}"/>
             </Grid>
         </Border>
     </Grid>
