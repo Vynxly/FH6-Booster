@@ -88,6 +88,15 @@
     <system:String x:Key="OtherModificationsFreeVisualUpgrades">å…è´¹å¤–è§‚å‡çº§</system:String>
     <system:String x:Key="OtherModificationsQuickAddAllCars">å¿«é€Ÿæ·»åŠ æ‰€æœ‰è½¦è¾†</system:String>
     <system:String x:Key="OtherModificationsQuickAddRareCars">å¿«é€Ÿæ·»åŠ ç¨€æœ‰è½¦è¾†</system:String>
+    <system:String x:Key="Fh6Additions">FH6 Additions</system:String>
+    <system:String x:Key="Fh6InstallFlags">Install Flags</system:String>
+    <system:String x:Key="Fh6FullAutoshow">Full Autoshow</system:String>
+    <system:String x:Key="Fh6FreeAllUpgrades">Free All Upgrades</system:String>
+    <system:String x:Key="Fh6FreeWheels">Free Wheels</system:String>
+    <system:String x:Key="Fh6DriftScore">Drift Score 10x</system:String>
+    <system:String x:Key="Fh6MaxTraction">Max Traction</system:String>
+    <system:String x:Key="Fh6TorqueScale">Torque 2x</system:String>
+    <system:String x:Key="Fh6DragScale">Drag 0.5x</system:String>
     
     <!-- SelfVehicle.xaml -->
     <system:String x:Key="Handling">æ“æŽ§</system:String>
