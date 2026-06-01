@@ -246,9 +246,10 @@ public partial class Unlocks
             return;
         }
 
-        if (sender is Button button)
+        var unlockEverythingButton = sender as Button;
+        if (unlockEverythingButton != null)
         {
-            button.IsEnabled = false;
+            unlockEverythingButton.IsEnabled = false;
         }
 
         try
@@ -257,9 +258,9 @@ public partial class Unlocks
         }
         finally
         {
-            if (sender is Button button)
+            if (unlockEverythingButton != null)
             {
-                button.IsEnabled = true;
+                unlockEverythingButton.IsEnabled = true;
             }
         }
     }
