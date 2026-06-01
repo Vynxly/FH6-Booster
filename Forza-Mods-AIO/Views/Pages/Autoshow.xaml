@@ -19,6 +19,47 @@
             <Label VerticalAlignment="Top"
                    HorizontalAlignment="Center"
                    Margin="0 5 0 0"
+                   Content="SQL Database (in-memory SQLite)"
+                   FontSize="14.5"
+                   FontWeight="SemiBold" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0 0 20 0">
+                    <Label Content="Unlock Everything"
+                           HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="Run all SQL cheats"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.UnlockEverythingCommand}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <Label Content="Persistent locks (10s)"
+                           HorizontalAlignment="Center" />
+                    <mah:ToggleSwitch MinWidth="0"
+                                      HorizontalAlignment="Center"
+                                      Content="Free Cars + Autoshow + Install Flags"
+                                      IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                                      Command="{Binding ViewModel.TogglePersistentLocksCommand}"
+                                      CommandParameter="{Binding IsOn, RelativeSource={RelativeSource Self}}" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel>
+
+            <Label VerticalAlignment="Top"
+                   HorizontalAlignment="Center"
+                   Margin="0 5 0 0"
                    Content="{DynamicResource AutoshowFilters}"
                    FontSize="14.5"
                    FontWeight="SemiBold" />

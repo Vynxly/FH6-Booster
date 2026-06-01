@@ -47,7 +47,7 @@ public partial class Unlocks
 
     private bool IsFh5OnlySelection()
     {
-        return UnlockBox.SelectedIndex is >= 4 and <= 8;
+        return UnlockBox.SelectedIndex == 3;
     }
 
     private bool CanUseCurrentSelection()
@@ -122,19 +122,6 @@ public partial class Unlocks
                 {
                     if (IsFh4)
                     {
-                        await XpFh4(toggleSwitch.IsOn);
-                    }
-                    else
-                    {
-                        await Xp(toggleSwitch.IsOn);
-                    }
-
-                    break;
-                }
-                case 2:
-                {
-                    if (IsFh4)
-                    {
                         await WheelspinsFh4(toggleSwitch.IsOn);
                     }
                     else
@@ -144,7 +131,7 @@ public partial class Unlocks
 
                     break;
                 }
-                case 3:
+                case 2:
                 {
                     if (IsFh4)
                     {
@@ -157,32 +144,83 @@ public partial class Unlocks
 
                     break;
                 }
-                case 4:
-                {
-                    await Accolades(toggleSwitch.IsOn);
-                    break;
-                }
-                case 5:
-                {
-                    await Kudos(toggleSwitch.IsOn);
-                    break;
-                }
-                case 6:
-                {
-                    await Forzathon(toggleSwitch.IsOn);
-                    break;
-                }
-                case 7:
+                case 3:
                 {
                     await Series(toggleSwitch.IsOn);
                     break;
                 }
-                case 8:
-                {
-                    await Seasonal(toggleSwitch.IsOn);
-                    break;
-                }
             }
+        }
+        finally
+        {
+            ViewModel.AreUiElementsEnabled = true;
+        }
+    }
+
+
+    private async void OneClickBooster_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (!HasSupportedGame())
+        {
+            return;
+        }
+
+        ViewModel.CreditsValue = 20_000_000;
+        UnlockBox.SelectedIndex = 0;
+        ValueBox.Value = ViewModel.CreditsValue;
+        ViewModel.AreUiElementsEnabled = false;
+
+        try
+        {
+            if (IsFh4)
+            {
+                await CreditsFh4(true);
+            }
+            else
+            {
+                await Credits(true);
+            }
+
+            SetToggleWithoutRunning(ViewModel.IsCreditsEnabled);
+        }
+        finally
+        {
+            ViewModel.AreUiElementsEnabled = true;
+        }
+    }
+
+    private async void MaxAll_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (!HasSupportedGame())
+        {
+            return;
+        }
+
+        ViewModel.CreditsValue = 20_000_000;
+        ViewModel.WheelspinsValue = 9_999;
+        ViewModel.SkillPointsValue = 9_999;
+        ViewModel.SeriesValue = 9_999;
+        UnlockBox.SelectedIndex = 0;
+        ValueBox.Value = ViewModel.CreditsValue;
+        ViewModel.AreUiElementsEnabled = false;
+
+        try
+        {
+            if (IsFh4)
+            {
+                await CreditsFh4(true);
+                await WheelspinsFh4(true);
+                await SkillPointsFh4(true);
+            }
+            else
+            {
+                await Credits(true);
+                await Wheelspins(true);
+                await SkillPoints(true);
+                await Series(true);
+            }
+
+            SetToggleWithoutRunning(ViewModel.IsCreditsEnabled);
         }
         finally
         {
@@ -513,14 +551,9 @@ public partial class Unlocks
         ValueBox.Value = UnlockBox.SelectedIndex switch
         {
             0 => ViewModel.CreditsValue,
-            1 => ViewModel.XpValue,
-            2 => ViewModel.WheelspinsValue,
-            3 => ViewModel.SkillPointsValue,
-            4 => ViewModel.AccoladesValue,
-            5 => ViewModel.KudosValue,
-            6 => ViewModel.ForzathonValue,
-            7 => ViewModel.SeriesValue,
-            8 => ViewModel.SeasonalValue,
+            1 => ViewModel.WheelspinsValue,
+            2 => ViewModel.SkillPointsValue,
+            3 => ViewModel.SeriesValue,
             _ => 0
         };
 
@@ -533,14 +566,9 @@ public partial class Unlocks
         return UnlockBox.SelectedIndex switch
         {
             0 => ViewModel.IsCreditsEnabled,
-            1 => ViewModel.IsXpEnabled,
-            2 => ViewModel.IsWheelspinsEnabled,
-            3 => ViewModel.IsSkillPointsEnabled,
-            4 => ViewModel.IsAccoladesEnabled,
-            5 => ViewModel.IsKudosEnabled,
-            6 => ViewModel.IsForzathonEnabled,
-            7 => ViewModel.IsSeriesEnabled,
-            8 => ViewModel.IsSeasonalEnabled,
+            1 => ViewModel.IsWheelspinsEnabled,
+            2 => ViewModel.IsSkillPointsEnabled,
+            3 => ViewModel.IsSeriesEnabled,
             _ => false
         };
     }
@@ -575,42 +603,17 @@ public partial class Unlocks
             }
             case 1:
             {
-                ViewModel.XpValue = value;
+                ViewModel.WheelspinsValue = value;
                 break;
             }
             case 2:
             {
-                ViewModel.WheelspinsValue = value;
+                ViewModel.SkillPointsValue = value;
                 break;
             }
             case 3:
             {
-                ViewModel.SkillPointsValue = value;
-                break;
-            }
-            case 4:
-            {
-                ViewModel.AccoladesValue = value;
-                break;
-            }
-            case 5:
-            {
-                ViewModel.KudosValue = value;
-                break;
-            }
-            case 6:
-            {
-                ViewModel.ForzathonValue = value;
-                break;
-            }
-            case 7:
-            {
                 ViewModel.SeriesValue = value;
-                break;
-            }
-            case 8:
-            {
-                ViewModel.SeasonalValue = value;
                 break;
             }
         }

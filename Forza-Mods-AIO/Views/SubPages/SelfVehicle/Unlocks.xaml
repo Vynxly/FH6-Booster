@@ -34,6 +34,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="14"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="14"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
@@ -49,14 +51,9 @@
                       BorderBrush="{StaticResource BoosterBorder}"
                       mah:ControlsHelper.CornerRadius="10">
                 <ComboBoxItem Content="Credits"/>
-                <ComboBoxItem Content="XP"/>
                 <ComboBoxItem Content="Wheelspins"/>
                 <ComboBoxItem Content="Skill Points"/>
-                <ComboBoxItem Content="Accolades"/>
-                <ComboBoxItem Content="Kudos"/>
-                <ComboBoxItem Content="Forzathon Points"/>
                 <ComboBoxItem Content="Series Points"/>
-                <ComboBoxItem Content="Seasonal Points"/>
             </ComboBox>
         </StackPanel>
 
@@ -80,6 +77,58 @@
         </StackPanel>
 
         <Border Grid.Row="4"
+                CornerRadius="12"
+                Background="#130A20"
+                BorderBrush="#6A2CA8"
+                BorderThickness="1"
+                Padding="13 10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="QUICK ACTIONS"
+                               Foreground="#EEDFFF"
+                               FontFamily="Consolas"
+                               FontWeight="Bold"
+                               FontSize="13"/>
+                    <TextBlock Text="One-Click Booster enables the existing safe credits override at 20,000,000 credits. Max All caps credits at 20,000,000 and maxes the remaining enabled modules."
+                               Foreground="{StaticResource BoosterMuted}"
+                               FontFamily="Consolas"
+                               FontSize="11"
+                               TextWrapping="Wrap"
+                               Margin="0 5 18 0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="One-Click Booster"
+                        IsEnabled="{Binding ViewModel.AreUiElementsEnabled}"
+                        VerticalAlignment="Center"
+                        Margin="0 0 8 0"
+                        Padding="12 6"
+                        BorderThickness="0"
+                        FontFamily="Consolas"
+                        Background="{StaticResource BoosterPurple}"
+                        Foreground="White"
+                        Click="OneClickBooster_OnClick"/>
+
+                <Button Grid.Column="2"
+                        Content="Max All"
+                        IsEnabled="{Binding ViewModel.AreUiElementsEnabled}"
+                        VerticalAlignment="Center"
+                        Padding="12 6"
+                        BorderThickness="0"
+                        FontFamily="Consolas"
+                        Background="{StaticResource BoosterField}"
+                        Foreground="White"
+                        Click="MaxAll_OnClick"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="6"
                 CornerRadius="12"
                 Background="#130A20"
                 BorderBrush="#6A2CA8"
