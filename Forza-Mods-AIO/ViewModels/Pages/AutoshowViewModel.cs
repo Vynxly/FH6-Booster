@@ -133,29 +133,42 @@ public partial class AutoshowViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task UnlockEverything()
+    public async Task UnlockEverything()
     {
         UiElementsEnabled = false;
 
-        foreach (var sql in GetUnlockEverythingSqlBatches())
+        try
         {
-            await Query(sql);
+            foreach (var sql in GetUnlockEverythingSqlBatches())
+            {
+                await Query(sql);
+            }
         }
-
-        UiElementsEnabled = true;
+        finally
+        {
+            UiElementsEnabled = true;
+        }
     }
 
     [RelayCommand]
-    private async Task TogglePersistentLocks(bool enabled)
+    public async Task TogglePersistentLocks(bool enabled)
     {
         PersistentLocksEnabled = enabled;
 
         if (enabled)
         {
             UiElementsEnabled = false;
-            await ApplyPersistentLocks();
-            UiElementsEnabled = true;
-            _persistentLocksTimer.Start();
+
+            try
+            {
+                await ApplyPersistentLocks();
+                _persistentLocksTimer.Start();
+            }
+            finally
+            {
+                UiElementsEnabled = true;
+            }
+
             return;
         }
 
@@ -220,7 +233,7 @@ public partial class AutoshowViewModel : ObservableObject
             case GameVerPlat.GameType.None:
             default:
             {
-                throw new IndexOutOfRangeException();
+                return;
             }
         }
     }

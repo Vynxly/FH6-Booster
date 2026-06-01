@@ -251,7 +251,6 @@
 
                 <Button Grid.Column="1"
                         Content="Unlock Everything"
-                        IsEnabled="{Binding SqlViewModel.UiElementsEnabled}"
                         VerticalAlignment="Center"
                         Margin="0 0 8 0"
                         Padding="12 6"
@@ -259,16 +258,14 @@
                         FontFamily="Consolas"
                         Background="{StaticResource BoosterPurple}"
                         Foreground="White"
-                        Command="{Binding SqlViewModel.UnlockEverythingCommand}"/>
+                        Click="UnlockEverythingButton_OnClick"/>
 
                 <mah:ToggleSwitch Grid.Column="2"
                                   Content="Persistent Locks"
-                                  IsEnabled="{Binding SqlViewModel.UiElementsEnabled}"
                                   VerticalAlignment="Center"
                                   MinWidth="0"
                                   FontSize="12"
-                                  Command="{Binding SqlViewModel.TogglePersistentLocksCommand}"
-                                  CommandParameter="{Binding IsOn, RelativeSource={RelativeSource Self}}"/>
+                                  Toggled="PersistentLocksSwitch_OnToggled"/>
             </Grid>
         </Border>
     </Grid>

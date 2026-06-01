@@ -15,7 +15,6 @@ public partial class Unlocks
     public Unlocks()
     {
         ViewModel = new UnlocksViewModel();
-        SqlViewModel = new AutoshowViewModel();
         DataContext = this;
 
         InitializeComponent();
@@ -23,7 +22,7 @@ public partial class Unlocks
     }
 
     public UnlocksViewModel ViewModel { get; }
-    public AutoshowViewModel SqlViewModel { get; }
+    private AutoshowViewModel? _sqlViewModel;
 
     private static UnlocksCheats UnlocksCheatsFh5 => GetClass<UnlocksCheats>();
 
@@ -36,6 +35,8 @@ public partial class Unlocks
         GetClass<Cheats.ForzaHorizon4.MiscCheats>();
 
     private bool IsFh4 => GameVerPlat.GetInstance().Type == GameVerPlat.GameType.Fh4;
+
+    private AutoshowViewModel SqlViewModel => _sqlViewModel ??= new AutoshowViewModel();
 
     private bool HasSupportedGame()
     {
@@ -189,6 +190,7 @@ public partial class Unlocks
                 await Credits(true);
             }
 
+            await SqlViewModel.UnlockEverything();
             SetToggleWithoutRunning(ViewModel.IsCreditsEnabled);
         }
         finally
@@ -228,6 +230,7 @@ public partial class Unlocks
                 await Series(true);
             }
 
+            await SqlViewModel.UnlockEverything();
             SetToggleWithoutRunning(ViewModel.IsCreditsEnabled);
         }
         finally
@@ -236,6 +239,55 @@ public partial class Unlocks
         }
     }
 
+    private async void UnlockEverythingButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (!HasSupportedGame())
+        {
+            return;
+        }
+
+        if (sender is Button button)
+        {
+            button.IsEnabled = false;
+        }
+
+        try
+        {
+            await SqlViewModel.UnlockEverything();
+        }
+        finally
+        {
+            if (sender is Button button)
+            {
+                button.IsEnabled = true;
+            }
+        }
+    }
+
+    private async void PersistentLocksSwitch_OnToggled(object sender, RoutedEventArgs e)
+    {
+        if (sender is not ToggleSwitch toggleSwitch)
+        {
+            return;
+        }
+
+        if (!HasSupportedGame())
+        {
+            SetToggleWithoutRunning(toggleSwitch, PersistentLocksSwitch_OnToggled, false);
+            return;
+        }
+
+        toggleSwitch.IsEnabled = false;
+
+        try
+        {
+            await SqlViewModel.TogglePersistentLocks(toggleSwitch.IsOn);
+        }
+        finally
+        {
+            toggleSwitch.IsEnabled = true;
+        }
+    }
 
     private static void SetToggleWithoutRunning(ToggleSwitch toggleSwitch, RoutedEventHandler handler, bool isOn)
     {
