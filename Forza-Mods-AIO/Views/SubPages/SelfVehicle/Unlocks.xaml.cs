@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Forza_Mods_AIO.Cheats.ForzaHorizon5;
 using Forza_Mods_AIO.Models;
+using Forza_Mods_AIO.ViewModels.Pages;
 using Forza_Mods_AIO.ViewModels.SubPages.SelfVehicle;
 using MahApps.Metro.Controls;
 using static Forza_Mods_AIO.Resources.Cheats;
@@ -21,6 +22,8 @@ public partial class Unlocks
     }
 
     public UnlocksViewModel ViewModel { get; }
+
+    public AutoshowViewModel ToolViewModel { get; } = new();
 
     private static UnlocksCheats UnlocksCheatsFh5 => GetClass<UnlocksCheats>();
 

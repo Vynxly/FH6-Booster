@@ -6,6 +6,16 @@ namespace Forza_Mods_AIO.Cheats.ForzaHorizon5;
 
 public class Sql : CheatsUtilities, ICheatsBase
 {
+    private static readonly string[] DbSigs =
+    [
+        "48 8B 0D ? ? ? ? 48 8B 01 4C 8D 45 ? 48 8D 55 ? FF 50 48 90 48 8B 4D ? 48 85 C9",
+        "0F 84 ? ? ? ? 48 8B 35 ? ? ? ? 48 85 F6 74",
+        "0F 85 ? ? ? ? 48 8B 35 ? ? ? ? 48 85 F6 74",
+        "48 8B 35 ? ? ? ? 48 85 F6 74",
+        "48 8B 35 ? ? ? ? 48 85 F6 0F 84",
+        "48 8B 35 ? ? ? ? 48 85 F6 0F 85"
+    ];
+
     private UIntPtr _cDatabaseAddress, _ptr;
     public bool WereScansSuccessful;
 
@@ -15,20 +25,59 @@ public class Sql : CheatsUtilities, ICheatsBase
         _cDatabaseAddress = 0;
         _ptr = 0;
 
-        const string sig = "0F 84 ? ? ? ? 48 8B 35 ? ? ? ? 48 85 F6 74";
-        _cDatabaseAddress = await SmartAobScan(sig);
-
-        if (_cDatabaseAddress > 0)
+        foreach (var sig in DbSigs)
         {
-            var relativeAddress = _cDatabaseAddress + 0x6 + 0x3;
-            var relative = GetInstance().ReadMemory<int>(relativeAddress);
-            var pCDataBaseAddress = _cDatabaseAddress + (nuint)relative + 0x6 + 0x7;
-            _ptr = GetInstance().ReadMemory<nuint>(pCDataBaseAddress);
+            _cDatabaseAddress = await SmartAobScan(sig);
+            if (_cDatabaseAddress == 0 || !TryResolveDatabasePointer(_cDatabaseAddress))
+            {
+                continue;
+            }
+
             WereScansSuccessful = true;
             return;
         }
 
-        ShowError("Sql", sig);
+        ShowError("Sql", string.Join(" | ", DbSigs));
+    }
+
+    private bool TryResolveDatabasePointer(nuint matchAddress)
+    {
+        var memory = GetInstance();
+
+        for (nuint offset = 0; offset < 24; offset++)
+        {
+            try
+            {
+                if (memory.ReadMemory<byte>(matchAddress + offset) != 0x48 ||
+                    memory.ReadMemory<byte>(matchAddress + offset + 1) != 0x8B)
+                {
+                    continue;
+                }
+
+                var registerByte = memory.ReadMemory<byte>(matchAddress + offset + 2);
+                if (registerByte is not 0x0D and not 0x35)
+                {
+                    continue;
+                }
+
+                var relative = memory.ReadMemory<int>(matchAddress + offset + 3);
+                var instructionEnd = (long)(matchAddress + offset + 7);
+                var pointerAddress = (nuint)(instructionEnd + relative);
+                var databasePointer = memory.ReadMemory<nuint>(pointerAddress);
+                if (databasePointer == 0 || GetVirtualFunctionPtr(databasePointer, 9) == 0)
+                {
+                    continue;
+                }
+
+                _ptr = databasePointer;
+                return true;
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        return false;
     }
     
     private static nuint GetVirtualFunctionPtr(nuint ptr, int index)

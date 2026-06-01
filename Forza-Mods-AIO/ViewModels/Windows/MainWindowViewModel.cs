@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
@@ -26,6 +27,10 @@ public partial class MainWindowViewModel : ObservableObject
     private bool _isInitialized;
 
     private const string NotAttachedText = "Launch FH4, FH5, or FH6";
+    private const string MicrosoftStorePlatform = "MS";
+    private const string MicrosoftHorizonPackageName = "Microsoft.624F8B84B80";
+    private const string MicrosoftSunrisePackageName = "Microsoft.SunriseBaseGame";
+
     private const double WindowCornerRadiusSize = 7.5;
 
     [ObservableProperty]
@@ -185,13 +190,45 @@ public partial class MainWindowViewModel : ObservableObject
 
         foreach (var processName in processNames)
         {
-            if (GetInstance().OpenProcess(processName) != Mem.OpenProcessResults.Success) continue;
+            if (!TryOpenProcess(processName)) continue;
             GvpMaker(processName);
             Attached = true;
             break;
         }
 
         return Attached;
+    }
+
+
+    private static bool TryOpenProcess(string processName)
+    {
+        if (GetInstance().OpenProcess(processName) == Mem.OpenProcessResults.Success)
+        {
+            return true;
+        }
+
+        var processNameWithoutExtension = GetFileNameWithoutExtension(processName);
+        foreach (var process in Process.GetProcessesByName(processNameWithoutExtension))
+        {
+            using (process)
+            {
+                try
+                {
+                    if (GetInstance().OpenProcess(process.Id) == Mem.OpenProcessResults.Success)
+                    {
+                        return true;
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                }
+                catch (Win32Exception)
+                {
+                }
+            }
+        }
+
+        return false;
     }
 
     private void SetupExit()
@@ -223,25 +260,11 @@ public partial class MainWindowViewModel : ObservableObject
             return;
         }
 
-        string platform;
-        string update;
         var gamePath = process.MainModule.FileName;
-
-        if (gamePath.Contains("Microsoft.624F8B84B80") || gamePath.Contains("Microsoft.SunriseBaseGame"))
-        {
-            platform = "MS";
-            var filePath = Combine(GetDirectoryName(gamePath) ?? string.Empty, "appxmanifest.xml");
-            var xml = XElement.Load(filePath);
-            var descendants = xml.Descendants().Where(e => e.Name.LocalName == "Identity");
-            var version = descendants.Select(e => e.Attribute("Version")).FirstOrDefault();
-            update = version == null ? "Unable to get update info" : version.Value;
-        }
-        else
-        {
-            var filePath = Combine(GetDirectoryName(gamePath) ?? string.Empty, "OnlineFix64.dll");
-            platform = File.Exists(filePath) ? "OnlineFix - Steam" : "Steam";
-            update = GetVersionInfo(process.MainModule.FileName).FileVersion ?? "Unable to get update info";
-        }
+        var platform = GetPlatform(gamePath);
+        var update = platform == MicrosoftStorePlatform
+            ? GetMicrosoftStoreUpdate(gamePath)
+            : GetVersionInfo(process.MainModule.FileName).FileVersion ?? "Unable to get update info";
 
         var smoothName = GetSmoothNameFromProcessName(name);
         var type = GetTypeFromName(smoothName);
@@ -250,6 +273,61 @@ public partial class MainWindowViewModel : ObservableObject
         GameVerPlat.GetInstance().Update = update;
         GameVerPlat.GetInstance().Type = type;
         AttachedText = $"{GameVerPlat.GetInstance().Name}, {GameVerPlat.GetInstance().Platform}, {GameVerPlat.GetInstance().Update}";
+    }
+
+
+    private static string GetPlatform(string gamePath)
+    {
+        if (IsMicrosoftStoreGamePath(gamePath) || TryGetPackageRoot(gamePath, out _))
+        {
+            return MicrosoftStorePlatform;
+        }
+
+        var filePath = Combine(GetDirectoryName(gamePath) ?? string.Empty, "OnlineFix64.dll");
+        return File.Exists(filePath) ? "OnlineFix - Steam" : "Steam";
+    }
+
+    private static bool IsMicrosoftStoreGamePath(string gamePath)
+    {
+        return gamePath.Contains(MicrosoftHorizonPackageName, StringComparison.OrdinalIgnoreCase) ||
+               gamePath.Contains(MicrosoftSunrisePackageName, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string GetMicrosoftStoreUpdate(string gamePath)
+    {
+        var filePath = Combine(GetDirectoryName(gamePath) ?? string.Empty, "appxmanifest.xml");
+        if (!File.Exists(filePath) && TryGetPackageRoot(gamePath, out var packageRoot))
+        {
+            filePath = Combine(packageRoot, "appxmanifest.xml");
+        }
+
+        if (!File.Exists(filePath))
+        {
+            return "Unable to get update info";
+        }
+
+        var xml = XElement.Load(filePath);
+        var descendants = xml.Descendants().Where(e => e.Name.LocalName == "Identity");
+        var version = descendants.Select(e => e.Attribute("Version")).FirstOrDefault();
+        return version == null ? "Unable to get update info" : version.Value;
+    }
+
+    private static bool TryGetPackageRoot(string gamePath, out string packageRoot)
+    {
+        var directory = GetDirectoryName(gamePath);
+        while (!string.IsNullOrEmpty(directory))
+        {
+            if (File.Exists(Combine(directory, "appxmanifest.xml")))
+            {
+                packageRoot = directory;
+                return true;
+            }
+
+            directory = GetDirectoryName(directory);
+        }
+
+        packageRoot = string.Empty;
+        return false;
     }
 
     private static GameVerPlat.GameType GetTypeFromName(string name)
