@@ -406,6 +406,136 @@
             </Grid>
         </StackPanel>
         
+
+
+        <StackPanel>
+
+            <Label VerticalAlignment="Top"
+                   HorizontalAlignment="Center"
+                   Content="{DynamicResource Fh6Additions}"
+                   FontSize="14.5"
+                   FontWeight="SemiBold" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <Label Content="{DynamicResource Fh6InstallFlags}" HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="{DynamicResource Run}"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.ExecuteSqlCommand}"
+                            CommandParameter="{Binding ViewModel.InstallFlagsSql}" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="20 0 10 0">
+                    <Label Content="{DynamicResource Fh6FullAutoshow}" HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="{DynamicResource Run}"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.ExecuteSqlCommand}"
+                            CommandParameter="{Binding ViewModel.FullAutoshowSql}" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="2" Margin="10 0 20 0">
+                    <Label Content="{DynamicResource Fh6FreeAllUpgrades}" HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="{DynamicResource Run}"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.ExecuteSqlCommand}"
+                            CommandParameter="{Binding ViewModel.FreeAllUpgradesSql}" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="3">
+                    <Label Content="{DynamicResource Fh6FreeWheels}" HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="{DynamicResource Run}"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.ExecuteSqlCommand}"
+                            CommandParameter="{Binding ViewModel.FreeWheelsSql}" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0 10 0 0">
+                    <Label Content="{DynamicResource Fh6DriftScore}" HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="{DynamicResource Run}"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.ExecuteSqlCommand}"
+                            CommandParameter="{Binding ViewModel.DriftScoreSql}" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="20 10 10 0">
+                    <Label Content="{DynamicResource Fh6MaxTraction}" HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="{DynamicResource Run}"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.ExecuteSqlCommand}"
+                            CommandParameter="{Binding ViewModel.MaxTractionSql}" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="2" Margin="10 10 20 0">
+                    <Label Content="{DynamicResource Fh6TorqueScale}" HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="{DynamicResource Run}"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.ExecuteSqlCommand}"
+                            CommandParameter="{Binding ViewModel.TorqueScaleSql}" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="3" Margin="0 10 0 0">
+                    <Label Content="{DynamicResource Fh6DragScale}" HorizontalAlignment="Center" />
+                    <Button HorizontalAlignment="Center"
+                            Content="{DynamicResource Run}"
+                            IsEnabled="{Binding ViewModel.UiElementsEnabled, Mode=OneWay}"
+                            BorderThickness="0"
+                            mah:ControlsHelper.CornerRadius="{StaticResource ControlCornerRadius}"
+                            mah:ControlsHelper.FocusBorderThickness="0"
+                            Background="{Binding Theming.DarkerColour, Mode=OneWay}"
+                            Command="{Binding ViewModel.ExecuteSqlCommand}"
+                            CommandParameter="{Binding ViewModel.DragScaleSql}" />
+                </StackPanel>
+
+            </Grid>
+        </StackPanel>
+
         <mc:AlternateContent>
             <mc:Choice Requires="debug">
                 <StackPanel VerticalAlignment="Center"
