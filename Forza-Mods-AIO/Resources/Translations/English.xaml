@@ -151,9 +151,9 @@
     <!-- Misc.xaml -->
     <system:String x:Key="NameSpoofer">Name Spoofer</system:String>
     <system:String x:Key="SpinPrizeScale">Spin Prize Scale</system:String>
-    <system:String x:Key="SpinSellFactor">Spin Sell Factor</system:String>
+    <system:String x:Key="SpinSellFactor">Sell Payout</system:String>
     <system:String x:Key="SkillScoreMultiplier">Skill Score Multiplier</system:String>
-    <system:String x:Key="DriftScoreMultiplier">Drift Score Multiplier</system:String>
+    <system:String x:Key="DriftScoreMultiplier">Drift Score</system:String>
     <system:String x:Key="SkillTreeCost">Skill Tree Perks Cost</system:String>
     <system:String x:Key="SkillTreeWideEdit">Skill Tree Wide Editing</system:String>
     <system:String x:Key="MissionTimeScale">Mission Time Scale</system:String>
@@ -164,7 +164,7 @@
     <system:String x:Key="SpeedTrapMultiplier">Speed Trap Multiplier</system:String>
     <system:String x:Key="DroneModeHeight">Drone Mode Max Height Multiplier</system:String>
     <system:String x:Key="RemoveBuildCap">Remove Build Cap</system:String>
-    <system:String x:Key="UnbreakableSkillScore">Unbreakable Skill Score</system:String>
+    <system:String x:Key="UnbreakableSkillScore">No Skill Break</system:String>
     <system:String x:Key="AutoTpToWaypoint">Auto TP To Waypoint</system:String>
 
     <!-- PhotoMode.xaml -->

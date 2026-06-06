@@ -151,9 +151,9 @@
     <!-- Misc.xaml -->
     <system:String x:Key="NameSpoofer">Changeur de nom</system:String>
     <system:String x:Key="SpinPrizeScale">Ã‰chelle des prix de la roue</system:String>
-    <system:String x:Key="SpinSellFactor">Facteur de vente de la roue</system:String>
+    <system:String x:Key="SpinSellFactor">Paiement de vente</system:String>
     <system:String x:Key="SkillScoreMultiplier">Multiplicateur de score de compÃ©tence</system:String>
-    <system:String x:Key="DriftScoreMultiplier">Multiplicateur de score de drift</system:String>
+    <system:String x:Key="DriftScoreMultiplier">Score de drift</system:String>
     <system:String x:Key="SkillTreeCost">CoÃ»t des avantages de l'arbre de compÃ©tences</system:String>
     <system:String x:Key="SkillTreeWideEdit">Ã‰dition large de l'arbre de compÃ©tences</system:String>
     <system:String x:Key="MissionTimeScale">Ã‰chelle de temps des missions</system:String>
@@ -164,7 +164,7 @@
     <system:String x:Key="SpeedTrapMultiplier">Multiplicateur de radar</system:String>
     <system:String x:Key="DroneModeHeight">Multiplicateur de hauteur max du mode drone</system:String>
     <system:String x:Key="RemoveBuildCap">Supprimer la limite de construction</system:String>
-    <system:String x:Key="UnbreakableSkillScore">Score de compÃ©tence incassable</system:String>
+    <system:String x:Key="UnbreakableSkillScore">Aucune rupture de compétence</system:String>
     <system:String x:Key="AutoTpToWaypoint">TP auto vers le point de passage</system:String>
 
     <!-- PhotoMode.xaml -->

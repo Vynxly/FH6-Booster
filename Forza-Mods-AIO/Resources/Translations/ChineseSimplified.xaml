@@ -151,9 +151,9 @@
     <!-- Misc.xaml -->
     <system:String x:Key="NameSpoofer">åç§°ä¼ªè£…</system:String>
     <system:String x:Key="SpinPrizeScale">è½¬ç›˜å¥–åŠ±å€æ•°</system:String>
-    <system:String x:Key="SpinSellFactor">è½¬ç›˜å”®å‡ºç³»æ•°</system:String>
+    <system:String x:Key="SpinSellFactor">Sell Payout</system:String>
     <system:String x:Key="SkillScoreMultiplier">æŠ€èƒ½åˆ†æ•°å€æ•°</system:String>
-    <system:String x:Key="DriftScoreMultiplier">æ¼‚ç§»åˆ†æ•°å€æ•°</system:String>
+    <system:String x:Key="DriftScoreMultiplier">Drift Score</system:String>
     <system:String x:Key="SkillTreeCost">æŠ€èƒ½æ ‘èŠ±è´¹</system:String>
     <system:String x:Key="SkillTreeWideEdit">æŠ€èƒ½æ ‘æ‰¹é‡ç¼–è¾‘</system:String>
     <system:String x:Key="MissionTimeScale">ä»»åŠ¡æ—¶é—´æ¯”ä¾‹</system:String>
@@ -164,7 +164,7 @@
     <system:String x:Key="SpeedTrapMultiplier">æµ‹é€Ÿç‚¹å€æ•°</system:String>
     <system:String x:Key="DroneModeHeight">æ— äººæœºæ¨¡å¼æœ€å¤§é«˜åº¦å€æ•°</system:String>
     <system:String x:Key="RemoveBuildCap">ç§»é™¤å»ºé€ ä¸Šé™</system:String>
-    <system:String x:Key="UnbreakableSkillScore">ä¸é—´æ–­æŠ€èƒ½åˆ†æ•°</system:String>
+    <system:String x:Key="UnbreakableSkillScore">No Skill Break</system:String>
     <system:String x:Key="AutoTpToWaypoint">è‡ªåŠ¨ä¼ é€åˆ°è·¯å¾„ç‚¹</system:String>
 
     <!-- PhotoMode.xaml -->
